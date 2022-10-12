@@ -49,11 +49,11 @@ public class User {
     private List<Participation> participations;
 
 
-    public User(String login, String password, Boolean is_moderator, Boolean is_admin) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
-        this.is_moderator = is_moderator;
-        this.is_admin = is_admin;
+        this.is_moderator = false;
+        this.is_admin = false;
         this.events = new ArrayList<>();
         this.groups_created = new ArrayList<>();
         this.participations = new ArrayList<>();

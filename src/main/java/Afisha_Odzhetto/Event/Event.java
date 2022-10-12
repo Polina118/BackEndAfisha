@@ -33,16 +33,16 @@ public class Event {
     @JoinColumn(name="event_id")
     private List<Phase_event> phases;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="part_id")
-    private Participation participation;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="part_id")
+//    private Participation participation;
 
     public Event(String event_name, String description) {
         this.event_name = event_name;
         this.description = description;
         this.date_of_create = LocalDate.now();
         this.phases = new ArrayList<>();
-        this.participation = new Participation();
+        //this.participation = new Participation();
     }
 
     public void addPhase(Phase_event phase_event){

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(path = "/api/users")
+@RequestMapping(path = "/users")
 @CrossOrigin()
 public class UserController {
 
@@ -31,17 +31,11 @@ public class UserController {
         return "Success";
     }
 
-//    @PostMapping(path = "/authorization")
-//    @ResponseBody
-//    public User AuthorizationUser(@RequestBody LoginForm loginForm) {
-//        User User = UserService.getByLogin(loginForm.getLogin());
-//        if (!Objects.equals(User.getPassword(), loginForm.getPassword()))
-//            throw new IllegalStateException((" --!incorrect password!-- "));
-//        return new User(
-//                User.getId(),
-//                User.getFirstname(),
-//                User.getLastname());
-//    }
+    @PostMapping(path = "/authorization")
+    @ResponseBody
+    public String AuthorizationUser(@RequestBody User user) {
+        return userService.autorization(user.getLogin(), user.getPassword());
+    }
 
     @DeleteMapping(path = "/delete{id}")
     public String DeleteUser(@PathVariable("id") int id) {

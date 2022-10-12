@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,10 +28,10 @@ public class EventController {
         return eventRepository.findAll();
     }
 
-    @PostMapping(path = "create{userId}")
+    @PostMapping(path = "create/{userId}")
     public String createEvent(@PathVariable("userId") int userId,@RequestBody Event event) {
         User user = userRepository.findById(userId).orElseThrow(() ->
-                new IllegalStateException("not found event with id " + userId));
+                new IllegalStateException("not found user with id " + userId));
         if (!user.getIs_moderator())
             return "Not moderator";
         user.addEvent(event);
@@ -40,7 +39,7 @@ public class EventController {
     }
 
     @Transactional
-    @PutMapping(path = "update{eventId}")
+    @PutMapping(path = "update/{eventId}")
     public void updateEvent(@PathVariable("eventId") int eventId,
                             @RequestParam String event_name,
                             @RequestParam String description)
@@ -51,7 +50,7 @@ public class EventController {
         event.setDescription(description);
     }
 
-    @DeleteMapping(path = "delete{eventId}")
+    @DeleteMapping(path = "delete/{eventId}")
     public String deleteEvent(@PathVariable("eventId") int eventId){
         Event event = eventRepository.findById(eventId).orElseThrow(() ->
                 new IllegalStateException("not found event with id " + eventId));

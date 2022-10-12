@@ -24,6 +24,7 @@ public class Phase_event {
             generator = "phase_sequence"
     )
     private Integer id;
+
     private Integer event_id;
     private LocalDate beginning;
     private LocalDate ending;
@@ -31,8 +32,7 @@ public class Phase_event {
     private String phase_description;
 
 
-    public Phase_event(Integer event_id, LocalDate beginning, LocalDate ending, String phase_name, String phase_description) {
-        this.event_id = event_id;
+    public Phase_event(LocalDate beginning, LocalDate ending, String phase_name, String phase_description) {
         this.beginning = beginning;
         this.ending = ending;
         this.phase_name = phase_name;

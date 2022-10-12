@@ -26,12 +26,6 @@ public class Th_user_group {
     private Integer user_id;
     private Integer group_id;
 
-//    @OneToOne(mappedBy = "user_in_group")
-//    private User user;
-//
-//    @OneToOne(mappedBy = "group_of_users")
-//    private Group group;
-
     public Th_user_group(Integer user_id, Integer group_id) {
         this.user_id = user_id;
         this.group_id = group_id;
