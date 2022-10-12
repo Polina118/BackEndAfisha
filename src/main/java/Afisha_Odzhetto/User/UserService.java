@@ -57,4 +57,15 @@ public class UserService {
 
     }
 
+    public void addModerator(int userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->
+                new IllegalStateException("user not found with id " + userId));
+        user.setIs_moderator(true);
+    }
+
+    public void deleteModerator(int userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->
+                new IllegalStateException("user not found with id " + userId));
+        user.setIs_moderator(false);
+    }
 }

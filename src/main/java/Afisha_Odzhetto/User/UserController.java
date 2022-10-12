@@ -25,17 +25,26 @@ public class UserController {
     }
 
     @PostMapping(path = "/registration")
-    @ResponseBody
     public String RegisterNewUser(@RequestBody User user) {
         userService.addUser(user);
         return "Success";
     }
 
     @PostMapping(path = "/authorization")
-    @ResponseBody
     public String AuthorizationUser(@RequestBody User user) {
         return userService.autorization(user.getLogin(), user.getPassword());
     }
+
+    @PostMapping(path = "/addModerator/{userId}")
+    public void addModerator(@PathVariable("userId") int userId){
+        userService.addModerator(userId);
+    }
+
+    @PostMapping(path = "/deleteModerator/{userId}")
+    public void deleteModerator(@PathVariable("userId") int userId){
+        userService.deleteModerator(userId);
+    }
+
 
     @DeleteMapping(path = "/delete{id}")
     public String DeleteUser(@PathVariable("id") int id) {
