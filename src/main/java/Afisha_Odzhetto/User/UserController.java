@@ -1,6 +1,7 @@
 package Afisha_Odzhetto.User;
 
 import Afisha_Odzhetto.Event.Event;
+import Afisha_Odzhetto.Group.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

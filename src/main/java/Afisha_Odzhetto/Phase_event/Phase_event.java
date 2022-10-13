@@ -25,17 +25,21 @@ public class Phase_event {
     )
     private Integer id;
 
-    private Integer event_id;
-    private LocalDate beginning;
-    private LocalDate ending;
+//    private Integer event_id;
+//    private LocalDate beginning;
+//    private LocalDate ending;
     private String phase_name;
     private String phase_description;
 
-
-    public Phase_event(LocalDate beginning, LocalDate ending, String phase_name, String phase_description) {
-        this.beginning = beginning;
-        this.ending = ending;
+    public Phase_event(String phase_name, String phase_description) {
         this.phase_name = phase_name;
         this.phase_description = phase_description;
     }
+
+//    public Phase_event(LocalDate beginning, LocalDate ending, String phase_name, String phase_description) {
+//        this.beginning = beginning;
+//        this.ending = ending;
+//        this.phase_name = phase_name;
+//        this.phase_description = phase_description;
+//    }
 }

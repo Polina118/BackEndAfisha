@@ -36,17 +36,9 @@ public class User {
     private Boolean is_moderator;
     private Boolean is_admin;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
-    private List<Event> events;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "creator_id")
-    private List<Group> groups_created;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private List<Participation> participations;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "userid")
+//    private List<Th_user_group> userList;
 
 
     public User(String login, String password) {
@@ -54,16 +46,16 @@ public class User {
         this.password = password;
         this.is_moderator = false;
         this.is_admin = false;
-        this.events = new ArrayList<>();
-        this.groups_created = new ArrayList<>();
-        this.participations = new ArrayList<>();
+//        this.events = new ArrayList<>();
+//        this.groups_created = new ArrayList<>();
+       // this.participations = new ArrayList<>();
     }
 
-    public void addEvent(Event event){
-        this.events.add(event);
-    }
-
-    public void addGroup(Group group){
-        this.groups_created.add(group);
-    }
+//    public void addEvent(Event event){
+//        this.events.add(event);
+//    }
+//
+//    public void addGroup(Group group){
+//        this.groups_created.add(group);
+//    }
 }

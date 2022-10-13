@@ -25,20 +25,17 @@ public class Participation {
             generator = "part_sequence"
     )
     private Integer id;
-    private LocalDate date_of_participation;
     private Boolean is_invited;
     private LocalDate date_of_create;
+    private int user_id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="event_id")
-    private Event event;
+    private int event_id;
 
-    public Participation(LocalDate date_of_participation,
-                         Boolean is_invited,
-                         LocalDate date_of_create) {
-        this.date_of_participation = date_of_participation;
-        this.is_invited = is_invited;
-        this.date_of_create = date_of_create;
+    public Participation(int user_id, int event_id) {
+        this.user_id = user_id;
+        this.event_id = event_id;
+        this.is_invited = false;
+        this.date_of_create = LocalDate.now();
     }
 }
 

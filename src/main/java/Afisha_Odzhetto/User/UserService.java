@@ -33,14 +33,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void addUserToGroup(int userId, int groupId){
-       User user = userRepository.findById(userId).orElseThrow(()->
-               new IllegalStateException("user not found"));
-       Group group = groupRepository.findById(groupId).orElseThrow(()->
-                new IllegalStateException("group not found"));
-       thUserGroupRepository.save(new Th_user_group(userId, groupId));
-    }
-
     public boolean deleteUser(int id) {
         if (!userRepository.existsById(id))
             return false;

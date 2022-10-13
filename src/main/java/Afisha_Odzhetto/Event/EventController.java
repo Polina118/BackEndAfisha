@@ -1,6 +1,9 @@
 package Afisha_Odzhetto.Event;
 
 
+import Afisha_Odzhetto.Group.Group;
+import Afisha_Odzhetto.Participation.Participation;
+import Afisha_Odzhetto.Participation.ParticipationRepository;
 import Afisha_Odzhetto.User.User;
 import Afisha_Odzhetto.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,15 @@ public class EventController {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final ParticipationRepository participationRepository;
 
     @Autowired
-    public EventController(EventRepository eventRepository, UserRepository userRepository) {
+    public EventController(EventRepository eventRepository,
+                           UserRepository userRepository,
+                           ParticipationRepository participationRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.participationRepository = participationRepository;
     }
 
     @GetMapping
@@ -28,15 +35,22 @@ public class EventController {
         return eventRepository.findAll();
     }
 
-    @PostMapping(path = "create/{userId}")
-    public String createEvent(@PathVariable("userId") int userId,@RequestBody Event event) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new IllegalStateException("not found user with id " + userId));
-        if (!user.getIs_moderator())
-            return "Not moderator";
-        user.addEvent(event);
+    @PostMapping(path = "create")
+    public String createEvent(@RequestBody Event event) {
+        eventRepository.save(event);
         return "success";
     }
+
+    @PostMapping(path = "/addParticipants{eventId}")
+    public void addParts(@PathVariable("eventId") int eventId, @RequestBody Group group){
+        Event event = eventRepository.findById(eventId).orElseThrow(()->
+                new IllegalStateException("not found event with id " + eventId));
+        event.addGroup(group);
+            List<User> users = group.getUsers_of_group();
+            for (User user : users){
+                participationRepository.save(new Participation(user.getId(), eventId));
+            }
+        }
 
     @Transactional
     @PutMapping(path = "update/{eventId}")
