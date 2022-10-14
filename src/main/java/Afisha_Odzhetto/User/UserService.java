@@ -8,6 +8,7 @@ import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +30,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getUsers() // id login mod admin
+    {
+        List<User> users = userRepository.findAll();
+        List<UserResponse> response = new ArrayList<>(users.size());
+        for (int i = 0; i < users.size(); i++){
+            User user = users.get(i);
+            response.add(i, new UserResponse(user.getId(), user.getLogin(), user.getIs_moderator(), user.getIs_admin()));
+        }
+        return response;
     }
 
     public boolean deleteUser(int id) {

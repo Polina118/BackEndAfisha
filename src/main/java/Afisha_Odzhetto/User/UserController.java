@@ -1,12 +1,9 @@
 package Afisha_Odzhetto.User;
 
-import Afisha_Odzhetto.Event.Event;
-import Afisha_Odzhetto.Group.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -21,7 +18,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<UserResponse> getUsers() { // id login mod admin
         return userService.getUsers();
     }
 

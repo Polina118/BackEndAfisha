@@ -1,7 +1,7 @@
-package Afisha_Odzhetto.Th_user_group;
+package Afisha_Odzhetto.Th_group_event;
 
+import Afisha_Odzhetto.Event.Event;
 import Afisha_Odzhetto.Group.Group;
-import Afisha_Odzhetto.User.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,30 +10,31 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Table
-@Entity(name = "th_user_group")
-public class Th_user_group {
+@Entity(name = "th_group_event")
+public class Th_group_event {
+
     @Id
     @SequenceGenerator(
-            name = "usgr_sequence",
-            sequenceName = "usgr_sequence",
+            name = "grev_seq",
+            sequenceName = "grev_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "usgr_sequence"
+            generator = "grev_seq"
     )
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
 
     @ManyToOne
     @JoinColumn(name = "group_id")
     Group group;
 
-    public Th_user_group(User user, Group group) {
-        this.user = user;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    Event event;
+
+    public Th_group_event(Group group, Event event) {
         this.group = group;
+        this.event = event;
     }
 }

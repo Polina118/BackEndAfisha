@@ -2,10 +2,9 @@ package Afisha_Odzhetto.Event;
 
 
 import Afisha_Odzhetto.Group.Group;
+import Afisha_Odzhetto.Group.GroupRepository;
 import Afisha_Odzhetto.Participation.Participation;
 import Afisha_Odzhetto.Participation.ParticipationRepository;
-import Afisha_Odzhetto.User.User;
-import Afisha_Odzhetto.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -13,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "events")
+@RequestMapping(path = "/events")
 @CrossOrigin
 public class EventController {
 
     private final EventRepository eventRepository;
-    private final UserRepository userRepository;
     private final ParticipationRepository participationRepository;
+    private final GroupRepository groupRepository;
 
     @Autowired
     public EventController(EventRepository eventRepository,
-                           UserRepository userRepository,
-                           ParticipationRepository participationRepository) {
+                           ParticipationRepository participationRepository,
+                           GroupRepository groupRepository) {
         this.eventRepository = eventRepository;
-        this.userRepository = userRepository;
         this.participationRepository = participationRepository;
+        this.groupRepository = groupRepository;
     }
 
     @GetMapping
@@ -42,14 +41,18 @@ public class EventController {
     }
 
     @PostMapping(path = "/addParticipants{eventId}")
-    public void addParts(@PathVariable("eventId") int eventId, @RequestBody Group group){
+    public void addParts(@PathVariable("eventId") int eventId, @RequestParam int groupId){
         Event event = eventRepository.findById(eventId).orElseThrow(()->
                 new IllegalStateException("not found event with id " + eventId));
+        Group group = groupRepository.findById(groupId).orElseThrow(()->
+                new IllegalStateException("not found group with id " + groupId));
+        // установить связь
         event.addGroup(group);
-            List<User> users = group.getUsers_of_group();
-            for (User user : users){
-                participationRepository.save(new Participation(user.getId(), eventId));
-            }
+        // восстановить свзяь юзера и группы
+//        List<Th_user_group> user_groups = userGroupRepository.findAllByGroup(group);
+//            for (var ug : user_groups){
+//                participationRepository.save(new Participation(ug.getUser().getId(), eventId));
+//            }
         }
 
     @Transactional

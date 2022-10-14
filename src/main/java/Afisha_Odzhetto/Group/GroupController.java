@@ -11,20 +11,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/group")
+@CrossOrigin
 public class GroupController {
 
     GroupRepository groupRepository;
     UserRepository userRepository;
 
-    ThUserGroupRepository userGroupRepository;
-
     @Autowired
     public GroupController(GroupRepository groupRepository,
-                           UserRepository userRepository,
-                           ThUserGroupRepository userGroupRepository) {
+                           UserRepository userRepository) {
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
-        this.userGroupRepository = userGroupRepository;
     }
 
     @GetMapping(path = "/all")
@@ -40,24 +37,21 @@ public class GroupController {
     @PostMapping(path = "/{groupId}adduser")
     public void addUser(@PathVariable ("groupId") int groupId, @RequestBody User user){
         Group group = groupRepository.findById(groupId).orElseThrow(()->
-                new IllegalStateException("not found"));
-        userGroupRepository.save(new Th_user_group(user.getId(), groupId));
+                new IllegalStateException("not found group"));
         group.addUser(user);
     }
 
     @PostMapping(path = "/delete{groupId}")
     public void deleteGroup(@PathVariable ("groupId") int groupId){
-        userGroupRepository.deleteGroup(groupId);
         groupRepository.deleteById(groupId);
     }
 
-    @PostMapping(path = "/delete/{groupId}/{userId}")
+    @PostMapping(path = "/delete{groupId}/{userId}")
     public void deleteUser(@PathVariable ("groupId") int groupId, @PathVariable ("userId") int userId){
         Group group = groupRepository.findById(groupId).orElseThrow(()->
                 new IllegalStateException("not found"));
         User user = userRepository.findById(userId).orElseThrow(()->
                 new IllegalStateException("not found"));
-        userGroupRepository.deleteTh(userId, groupId);
-        group.deleteUser(user);
+        group.removeUser(user);
     }
 }

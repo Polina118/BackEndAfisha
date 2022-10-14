@@ -1,21 +1,16 @@
 package Afisha_Odzhetto.User;
 
-import Afisha_Odzhetto.Event.Event;
+import Afisha_Odzhetto.Author;
+import Afisha_Odzhetto.Book;
 import Afisha_Odzhetto.Group.Group;
-import Afisha_Odzhetto.Notifications.Notifications;
-import Afisha_Odzhetto.Participation.Participation;
 import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
-@Data
 @Table
 @Entity(name = "users")
 public class User {
@@ -36,26 +31,72 @@ public class User {
     private Boolean is_moderator;
     private Boolean is_admin;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "userid")
-//    private List<Th_user_group> userList;
-
-
     public User(String login, String password) {
         this.login = login;
         this.password = password;
         this.is_moderator = false;
         this.is_admin = false;
-//        this.events = new ArrayList<>();
-//        this.groups_created = new ArrayList<>();
-       // this.participations = new ArrayList<>();
     }
 
-//    public void addEvent(Event event){
-//        this.events.add(event);
-//    }
-//
-//    public void addGroup(Group group){
-//        this.groups_created.add(group);
-//    }
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getIs_moderator() {
+        return is_moderator;
+    }
+
+    public void setIs_moderator(Boolean is_moderator) {
+        this.is_moderator = is_moderator;
+    }
+
+    public Boolean getIs_admin() {
+        return is_admin;
+    }
+
+    public void setIs_admin(Boolean is_admin) {
+        this.is_admin = is_admin;
+    }
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Group> groups=new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Group)) return false;
+
+        return id != null && id.equals(((User) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
 }
