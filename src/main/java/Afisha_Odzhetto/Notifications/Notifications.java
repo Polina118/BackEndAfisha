@@ -32,10 +32,11 @@ import java.util.Date;
     private LocalDate date_of_send;
     private Boolean is_read;
 
-    public Notifications(Integer user_id, Integer event_id, LocalDate date_of_send, Boolean is_read) {
+    public Notifications(Integer user_id, Integer event_id) {
         this.user_id = user_id;
         this.event_id = event_id;
-        this.date_of_send = date_of_send;
-        this.is_read = is_read;
+        this.date_of_send = LocalDate.now();
+        this.is_read = false;
     }
+
 }

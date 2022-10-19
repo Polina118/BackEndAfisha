@@ -28,7 +28,6 @@ public class Participation {
     private Boolean is_invited;
     private LocalDate date_of_create;
     private int user_id;
-
     private int event_id;
 
     public Participation(int user_id, int event_id) {

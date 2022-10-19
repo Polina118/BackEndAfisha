@@ -8,26 +8,32 @@ import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final GroupRepository groupRepository;
-    private final ThUserGroupRepository thUserGroupRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository,
-                       GroupRepository groupRepository,
-                       ThUserGroupRepository thUserGroupRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
-        this.thUserGroupRepository = thUserGroupRepository;
     }
 
     public void addUser(User user) {
-        userRepository.save(user);
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(user.getLogin());
+        if(!matcher.matches())
+            throw new IllegalStateException("incorrect login");
+        Optional<User> optionalUser = userRepository.findByLogin(user.getLogin());
+        if (optionalUser.isPresent())
+            throw new IllegalStateException("login is taken");
+        userRepository.save(new User(user.getLogin(), user.getPassword()));
     }
 
     public List<UserResponse> getUsers() // id login mod admin
@@ -48,21 +54,23 @@ public class UserService {
         return true;
     }
 
-    public String autorization(String login, String password) {
+    public User autorization(String login, String password) {
         User user = userRepository.findByLogin(login).orElseThrow(()->
                 new IllegalStateException("user not found"));
         if (!user.getPassword().equals(password))
             throw new IllegalStateException((" --!incorrect password!-- "));
-        return "success";
+        return user;
 
     }
 
+    @Transactional
     public void addModerator(int userId) {
         User user = userRepository.findById(userId).orElseThrow(()->
                 new IllegalStateException("user not found with id " + userId));
         user.setIs_moderator(true);
     }
 
+    @Transactional
     public void deleteModerator(int userId) {
         User user = userRepository.findById(userId).orElseThrow(()->
                 new IllegalStateException("user not found with id " + userId));

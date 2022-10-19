@@ -3,8 +3,6 @@ package Afisha_Odzhetto.Group;
 import Afisha_Odzhetto.Author;
 import Afisha_Odzhetto.Book;
 import Afisha_Odzhetto.Event.Event;
-import Afisha_Odzhetto.Th_group_event.Th_group_event;
-import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import Afisha_Odzhetto.User.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +12,7 @@ import java.util.*;
 
 @NoArgsConstructor
 @Table
+@Data
 @Entity(name = "groups")
 public class Group {
 
@@ -32,23 +31,6 @@ public class Group {
 
     private String description;
 
-    public Group(String group_name,String description) {
-        this.group_name = group_name;
-        this.description = description;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getGroup_name() {
-        return group_name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     @ManyToMany (cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -61,6 +43,23 @@ public class Group {
 
     @ManyToMany(mappedBy = "groups")
     private Set<Event> events=new HashSet<>();
+
+    public Group(String group_name,String description) {
+        this.group_name = group_name;
+        this.description = description;
+    }
+
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public String getGroup_name() {
+//        return group_name;
+//    }
+//
+//    public String getDescription() {
+//        return description;
+//    }
 
     public void addUser(User user){
         this.users.add(user);

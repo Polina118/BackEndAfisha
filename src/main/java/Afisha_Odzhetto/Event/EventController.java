@@ -5,6 +5,7 @@ import Afisha_Odzhetto.Group.Group;
 import Afisha_Odzhetto.Group.GroupRepository;
 import Afisha_Odzhetto.Participation.Participation;
 import Afisha_Odzhetto.Participation.ParticipationRepository;
+import Afisha_Odzhetto.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -46,13 +47,11 @@ public class EventController {
                 new IllegalStateException("not found event with id " + eventId));
         Group group = groupRepository.findById(groupId).orElseThrow(()->
                 new IllegalStateException("not found group with id " + groupId));
-        // установить связь
         event.addGroup(group);
         // восстановить свзяь юзера и группы
-//        List<Th_user_group> user_groups = userGroupRepository.findAllByGroup(group);
-//            for (var ug : user_groups){
-//                participationRepository.save(new Participation(ug.getUser().getId(), eventId));
-//            }
+            for (User user : group.getUsers()){
+                participationRepository.save(new Participation(user.getId(), eventId));
+            }
         }
 
     @Transactional

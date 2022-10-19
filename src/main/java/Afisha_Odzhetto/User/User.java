@@ -1,9 +1,6 @@
 package Afisha_Odzhetto.User;
 
-import Afisha_Odzhetto.Author;
-import Afisha_Odzhetto.Book;
 import Afisha_Odzhetto.Group.Group;
-import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +8,8 @@ import javax.persistence.*;
 import java.util.*;
 
 @NoArgsConstructor
-@Table
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "login_unique", columnNames = "login") })
 @Entity(name = "users")
 public class User {
 

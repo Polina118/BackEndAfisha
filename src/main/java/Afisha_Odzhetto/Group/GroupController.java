@@ -34,7 +34,7 @@ public class GroupController {
         groupRepository.save(group);
     }
 
-    @PostMapping(path = "/{groupId}adduser")
+    @PostMapping(path = "{groupId}/adduser")
     public void addUser(@PathVariable ("groupId") int groupId, @RequestBody User user){
         Group group = groupRepository.findById(groupId).orElseThrow(()->
                 new IllegalStateException("not found group"));

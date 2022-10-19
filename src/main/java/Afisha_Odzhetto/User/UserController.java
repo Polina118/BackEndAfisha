@@ -29,16 +29,16 @@ public class UserController {
     }
 
     @PostMapping(path = "/authorization")
-    public String AuthorizationUser(@RequestBody User user) {
+    public User AuthorizationUser(@RequestBody User user) {
         return userService.autorization(user.getLogin(), user.getPassword());
     }
 
-    @PostMapping(path = "/addModerator/{userId}")
+    @PutMapping(path = "/addModerator/{userId}")
     public void addModerator(@PathVariable("userId") int userId){
         userService.addModerator(userId);
     }
 
-    @PostMapping(path = "/deleteModerator/{userId}")
+    @PutMapping(path = "/deleteModerator/{userId}")
     public void deleteModerator(@PathVariable("userId") int userId){
         userService.deleteModerator(userId);
     }

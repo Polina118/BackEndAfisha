@@ -30,13 +30,13 @@ public class Event {
     private String event_name;
     private String description;
     private LocalDate date_of_create;
-    private LocalDate date_of_event;
+    private String date_of_event;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="event")
     private List<Phase_event> phases;
 
-    public Event(String event_name, String description, LocalDate date_of_event) {
+    public Event(String event_name, String description, String date_of_event) {
         this.event_name = event_name;
         this.description = description;
         this.date_of_create = LocalDate.now();
@@ -46,7 +46,7 @@ public class Event {
 
     public Event(String event_name,
                  String description,
-                 LocalDate date_of_event,
+                 String date_of_event,
                  ArrayList<Phase_event> phases) {
         this.event_name = event_name;
         this.description = description;
@@ -75,7 +75,7 @@ public class Event {
         return description;
     }
 
-    public LocalDate getDate_of_event() {
+    public String getDate_of_event() {
         return date_of_event;
     }
 
