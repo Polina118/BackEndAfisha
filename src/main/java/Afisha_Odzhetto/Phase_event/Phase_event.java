@@ -25,10 +25,8 @@ public class Phase_event {
     )
     private Integer id;
 
-//    private Integer event_id;
-//    private LocalDate beginning;
-//    private LocalDate ending;
     private String phase_name;
+    @Lob
     private String phase_description;
 
     public Phase_event(String phase_name, String phase_description) {

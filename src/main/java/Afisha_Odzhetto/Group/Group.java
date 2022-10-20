@@ -1,7 +1,5 @@
 package Afisha_Odzhetto.Group;
 
-import Afisha_Odzhetto.Author;
-import Afisha_Odzhetto.Book;
 import Afisha_Odzhetto.Event.Event;
 import Afisha_Odzhetto.User.User;
 import lombok.Data;
@@ -28,7 +26,7 @@ public class Group {
     )
     private Integer id;
     private String group_name;
-
+    @Lob
     private String description;
 
     @ManyToMany (cascade = {
@@ -47,19 +45,8 @@ public class Group {
     public Group(String group_name,String description) {
         this.group_name = group_name;
         this.description = description;
-    }
 
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public String getGroup_name() {
-//        return group_name;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
+    }
 
     public void addUser(User user){
         this.users.add(user);

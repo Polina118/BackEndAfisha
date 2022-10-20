@@ -1,7 +1,5 @@
 package Afisha_Odzhetto.Group;
 
-import Afisha_Odzhetto.Th_user_group.ThUserGroupRepository;
-import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import Afisha_Odzhetto.User.User;
 import Afisha_Odzhetto.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +29,15 @@ public class GroupController {
 
     @PostMapping(path = "/create")
     public void createGroup(@RequestBody Group group){
-        groupRepository.save(group);
+        groupRepository.save(new Group(group.getGroup_name(), group.getDescription()));
     }
 
-    @PostMapping(path = "{groupId}/adduser")
-    public void addUser(@PathVariable ("groupId") int groupId, @RequestBody User user){
+    @PostMapping(path = "{groupId}/adduser{userId}")
+    public void addUser(@PathVariable ("groupId") int groupId, @PathVariable("userId") int userId){
         Group group = groupRepository.findById(groupId).orElseThrow(()->
                 new IllegalStateException("not found group"));
+        User user = userRepository.findById(userId).orElseThrow(()->
+                new IllegalStateException("not found user"));
         group.addUser(user);
     }
 

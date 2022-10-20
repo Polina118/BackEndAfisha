@@ -15,7 +15,7 @@ import java.util.List;
 
 @SpringBootApplication
 public class Application {
-
+	//events_project
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -33,7 +33,7 @@ public class Application {
 				User user1 = new User("user1@gmail.com", "11");
 				User user2 = new User("user2@gmail.com", "22");
 				User user3 = new User("user3@gmail.com", "33");
-				userRepository.saveAll(List.of(polina, user3));
+				//userRepository.saveAll(List.of(polina, user3));
 
 				Event event1 = new Event("event1", "desc1","2022-8-14");
 				Event event2 = new Event("event2", "desc1", "2022-8-14");
@@ -44,7 +44,7 @@ public class Application {
 				Group group2 = new Group("group2", "details");
 				Group group3 = new Group("group3", "details");
 
-				group1.addUser(user1);
+				group1.addUser(polina);
 				group1.addUser(user2);
 
 				group2.addUser(user1);

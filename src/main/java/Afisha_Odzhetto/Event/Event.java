@@ -1,10 +1,7 @@
 package Afisha_Odzhetto.Event;
 
-import Afisha_Odzhetto.Author;
-import Afisha_Odzhetto.Book;
 import Afisha_Odzhetto.Group.Group;
 import Afisha_Odzhetto.Phase_event.Phase_event;
-import Afisha_Odzhetto.Th_group_event.Th_group_event;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +11,7 @@ import java.util.*;
 
 @NoArgsConstructor
 @Table
+@Data
 @Entity
 public class Event {
     @Id
@@ -28,6 +26,7 @@ public class Event {
     )
     private Integer id;
     private String event_name;
+    @Lob
     private String description;
     private LocalDate date_of_create;
     private String date_of_event;
@@ -52,40 +51,14 @@ public class Event {
         this.description = description;
         this.date_of_create = LocalDate.now();
         this.date_of_event = date_of_event;
-        this.phases = phases;
+        for (Phase_event phase_event : phases)
+            if (phase_event.getPhase_name()!=null || phase_event.getPhase_name().length() != 0)
+                this.phases.add(phase_event);
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getEvent_name() {
-        return event_name;
-    }
-
-    public void setEvent_name(String event_name) {
-        this.event_name = event_name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDate_of_event() {
-        return date_of_event;
-    }
-
-    public List<Phase_event> getPhases() {
-        return phases;
-    }
-
-    public void addPhase(Phase_event phase_event){
+  /*  public void addPhase(Phase_event phase_event){
         this.phases.add(phase_event);
-    }
+    }*/
 
     @ManyToMany (cascade = {
             CascadeType.PERSIST,

@@ -1,10 +1,5 @@
 package Afisha_Odzhetto.User;
 
-import Afisha_Odzhetto.Event.Event;
-import Afisha_Odzhetto.Group.Group;
-import Afisha_Odzhetto.Group.GroupRepository;
-import Afisha_Odzhetto.Th_user_group.ThUserGroupRepository;
-import Afisha_Odzhetto.Th_user_group.Th_user_group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
